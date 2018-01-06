@@ -8,20 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		EEB43BC51FFF9AC9005125F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB43BC41FFF9AC9005125F5 /* AppDelegate.swift */; };
-		EEB43BC71FFF9AC9005125F5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB43BC61FFF9AC9005125F5 /* ViewController.swift */; };
 		EEB43BCA1FFF9AC9005125F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEB43BC81FFF9AC9005125F5 /* Main.storyboard */; };
 		EEB43BCC1FFF9AC9005125F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEB43BCB1FFF9AC9005125F5 /* Assets.xcassets */; };
 		EEB43BCF1FFF9AC9005125F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEB43BCD1FFF9AC9005125F5 /* LaunchScreen.storyboard */; };
+		EEB43BD81FFFA2DC005125F5 /* ImageGalleryCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB43BD71FFFA2DC005125F5 /* ImageGalleryCollectionViewController.swift */; };
+		EEB43BDA1FFFAB2E005125F5 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB43BD91FFFAB2E005125F5 /* ImageCollectionViewCell.swift */; };
+		EEB43BDC20007096005125F5 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB43BDB20007096005125F5 /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EEB43BC11FFF9AC9005125F5 /* ImageGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEB43BC41FFF9AC9005125F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EEB43BC61FFF9AC9005125F5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EEB43BC91FFF9AC9005125F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EEB43BCB1FFF9AC9005125F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EEB43BCE1FFF9AC9005125F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EEB43BD01FFF9AC9005125F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EEB43BD71FFFA2DC005125F5 /* ImageGalleryCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryCollectionViewController.swift; sourceTree = "<group>"; };
+		EEB43BD91FFFAB2E005125F5 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		EEB43BDB20007096005125F5 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,8 +58,10 @@
 		EEB43BC31FFF9AC9005125F5 /* ImageGallery */ = {
 			isa = PBXGroup;
 			children = (
-				EEB43BC61FFF9AC9005125F5 /* ViewController.swift */,
+				EEB43BD71FFFA2DC005125F5 /* ImageGalleryCollectionViewController.swift */,
 				EEB43BC81FFF9AC9005125F5 /* Main.storyboard */,
+				EEB43BD91FFFAB2E005125F5 /* ImageCollectionViewCell.swift */,
+				EEB43BDB20007096005125F5 /* Utilities.swift */,
 				EEB43BD61FFF9B11005125F5 /* Supporting Files */,
 				EEB43BD01FFF9AC9005125F5 /* Info.plist */,
 			);
@@ -144,8 +150,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEB43BC71FFF9AC9005125F5 /* ViewController.swift in Sources */,
+				EEB43BDA1FFFAB2E005125F5 /* ImageCollectionViewCell.swift in Sources */,
 				EEB43BC51FFF9AC9005125F5 /* AppDelegate.swift in Sources */,
+				EEB43BDC20007096005125F5 /* Utilities.swift in Sources */,
+				EEB43BD81FFFA2DC005125F5 /* ImageGalleryCollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
