@@ -14,10 +14,12 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     
     
     // Temporary model
-    var imageURLs = [String]()
+    var imageURLs = [URL]()
     
     func setupImageURLs() {
-        imageURLs += ["https://i.imgur.com/Wm1xcNZ.jpg", "https://i.imgur.com/pDygWBH.jpg"]
+        if let u1 = URL(string: "https://i.imgur.com/Wm1xcNZ.jpg"), let u2 = URL(string: "https://i.imgur.com/pDygWBH.jpg") {
+            imageURLs += [u1, u2]
+        }
     }
 
     override func viewDidLoad() {
@@ -25,10 +27,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         
         setupImageURLs()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Do any additional setup after loading the view.
 //        collectionView?.dragDelegate = self
         collectionView?.dropDelegate = self
     }
@@ -77,16 +75,13 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         // Configure the cell
         if let imageCell = cell as? ImageCollectionViewCell {
             imageCell.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
-            imageCell.image = fetchImage(at: indexPath[0])
+            imageCell.imageURL = imageURLs[indexPath.item]
         }
-    
+
         return cell
     }
     
-    // MARK: Private Implementation
-    func fetchImage(at index: Int) -> UIImage {
-        return UIImage()
-    }
+    // MARK: Private Implementations
     
 
     // MARK: UICollectionViewDelegate

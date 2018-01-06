@@ -12,12 +12,32 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     
-    var image: UIImage? {
+    var imageURL: URL? {
+        didSet {
+            fetchImage()
+        }
+    }
+    
+    // MARK: Private Implementations
+    private var image: UIImage? {
         get {
             return imageView.image
         }
         set {
             imageView.image = newValue
+        }
+    }
+    
+    private func fetchImage() {
+        if let url = imageURL {
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                let data = try? Data(contentsOf: url)
+                DispatchQueue.main.async {
+                    if let imageData = data, url == self?.imageURL {
+                        self?.image = UIImage(data: imageData)
+                    }
+                }
+            }
         }
     }
 }
