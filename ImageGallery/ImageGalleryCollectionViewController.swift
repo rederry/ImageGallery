@@ -10,15 +10,15 @@ import UIKit
 
 private let reuseIdentifier = "GalleryImageCell"
 
-class ImageGalleryCollectionViewController: UICollectionViewController, UICollectionViewDropDelegate {
+class ImageGalleryCollectionViewController: UICollectionViewController, UICollectionViewDropDelegate, UICollectionViewDelegateFlowLayout {
     
     
     // Temporary model
-    var imageURLs = [URL]()
+    var imageURLs = [(URL, CGFloat)]()
     
     func setupImageURLs() {
         if let u1 = URL(string: "https://i.imgur.com/Wm1xcNZ.jpg"), let u2 = URL(string: "https://i.imgur.com/pDygWBH.jpg") {
-            imageURLs += [u1, u2]
+            imageURLs += [(u1, 1.1), (u2, 1.7)]
         }
     }
 
@@ -59,12 +59,24 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         for (index, item) in coordinator.items.enumerated() {
             let indexPath = IndexPath(item: destinationIndexPath.item + index, section: destinationIndexPath.section)
             let placeHolderContext = coordinator.drop(item.dragItem, to: UICollectionViewDropPlaceholder(insertionIndexPath: indexPath, reuseIdentifier: "DropPlaceholderCell"))
+            
+            var localAspectRatio: CGFloat?
+            // Load UIImage
+            item.dragItem.itemProvider.loadObject(ofClass: UIImage.self, completionHandler: { (provider, error) in
+                if let image = provider as? UIImage {
+//                    print(image)
+                    localAspectRatio = image.size.height / image.size.width
+                }
+            })
+            // Load URL
             item.dragItem.itemProvider.loadObject(ofClass: NSURL.self, completionHandler: { (provider, error) in
                 DispatchQueue.main.async {
                     if let url = provider as? NSURL{
+//                        print((url as URL).imageURL)
+//                        print(localAspectRatio as Any)
                         placeHolderContext.commitInsertion(dataSourceUpdates: { (insertionIndexPath) in
-//                            print("index: \(insertionIndexPath) url: \((url as URL).imageURL)")
-                            self.imageURLs.insert((url as URL).imageURL, at: insertionIndexPath.item)
+                            // MARK: Warning
+                            self.imageURLs.insert(((url as URL).imageURL, localAspectRatio!), at: insertionIndexPath.item)
                         })
                     } else {
                         placeHolderContext.deletePlaceholder()
@@ -99,17 +111,18 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     
         // Configure the cell
         if let imageCell = cell as? ImageCollectionViewCell {
-            imageCell.imageURL = imageURLs[indexPath.item]
+            imageCell.imageURL = imageURLs[indexPath.item].0
         }
 
         return cell
     }
     
-    // MARK: - Private Implementations
-    
+    // MARK: - UICollectionViewDelegateFlowLayout
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: cellWidth, height: cellWidth * imageURLs[indexPath.item].1)
+    }
 
     // MARK: - UICollectionViewDelegate
-
     /*
     // Uncomment this method to specify if the specified item should be highlighted during tracking
     override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
@@ -138,5 +151,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     
     }
     */
-
+    
+    // MARK: - Private Implementations
+    private var cellWidth: CGFloat = 130
 }
