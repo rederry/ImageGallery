@@ -34,17 +34,40 @@
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9S1-FV-pnO">
                                             <rect key="frame" x="0.0" y="0.0" width="111" height="112"/>
                                         </imageView>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Utk-qt-9N1">
+                                            <rect key="frame" x="45" y="46" width="20" height="20"/>
+                                        </activityIndicatorView>
                                     </subviews>
                                 </view>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="9S1-FV-pnO" secondAttribute="bottom" id="88h-yz-LYf"/>
                                     <constraint firstAttribute="trailing" secondItem="9S1-FV-pnO" secondAttribute="trailing" id="A9E-03-Pvj"/>
                                     <constraint firstItem="9S1-FV-pnO" firstAttribute="top" secondItem="M9l-cI-2FX" secondAttribute="top" id="EEz-25-jyW"/>
+                                    <constraint firstItem="Utk-qt-9N1" firstAttribute="centerX" secondItem="9S1-FV-pnO" secondAttribute="centerX" id="F1q-ha-YGA"/>
                                     <constraint firstItem="9S1-FV-pnO" firstAttribute="leading" secondItem="M9l-cI-2FX" secondAttribute="leading" id="geG-ZL-zmY"/>
+                                    <constraint firstItem="Utk-qt-9N1" firstAttribute="centerY" secondItem="9S1-FV-pnO" secondAttribute="centerY" id="kqL-qc-ovz"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="imageView" destination="9S1-FV-pnO" id="zmD-f2-xc6"/>
+                                    <outlet property="spinner" destination="Utk-qt-9N1" id="pW6-6G-1wK"/>
                                 </connections>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DropPlaceholderCell" id="Xck-JC-PkX" customClass="ImageCollectionViewCell" customModule="ImageGallery" customModuleProvider="target">
+                                <rect key="frame" x="131.5" y="0.0" width="111" height="112"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="111" height="112"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="PFY-m1-zFF">
+                                            <rect key="frame" x="46" y="46" width="20" height="20"/>
+                                        </activityIndicatorView>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="PFY-m1-zFF" firstAttribute="centerY" secondItem="Xck-JC-PkX" secondAttribute="centerY" id="J3Z-Ro-10A"/>
+                                    <constraint firstItem="PFY-m1-zFF" firstAttribute="centerX" secondItem="Xck-JC-PkX" secondAttribute="centerX" id="lJJ-6n-3Sd"/>
+                                </constraints>
                             </collectionViewCell>
                         </cells>
                         <connections>

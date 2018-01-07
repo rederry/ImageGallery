@@ -45,8 +45,33 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         return UICollectionViewDropProposal(operation: .copy)
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
-
+        let destinationIndexPath : IndexPath
+        if let indexPath = coordinator.destinationIndexPath {
+            destinationIndexPath = indexPath
+        } else {
+            let section = collectionView.numberOfSections - 1
+            let item = collectionView.numberOfItems(inSection: section)
+            destinationIndexPath = IndexPath(item: item, section: section)
+        }
+        
+        for (index, item) in coordinator.items.enumerated() {
+            let indexPath = IndexPath(item: destinationIndexPath.item + index, section: destinationIndexPath.section)
+            let placeHolderContext = coordinator.drop(item.dragItem, to: UICollectionViewDropPlaceholder(insertionIndexPath: indexPath, reuseIdentifier: "DropPlaceholderCell"))
+            item.dragItem.itemProvider.loadObject(ofClass: NSURL.self, completionHandler: { (provider, error) in
+                DispatchQueue.main.async {
+                    if let url = provider as? NSURL{
+                        placeHolderContext.commitInsertion(dataSourceUpdates: { (insertionIndexPath) in
+//                            print("index: \(insertionIndexPath) url: \((url as URL).imageURL)")
+                            self.imageURLs.insert((url as URL).imageURL, at: insertionIndexPath.item)
+                        })
+                    } else {
+                        placeHolderContext.deletePlaceholder()
+                    }
+                }
+            })
+        }
     }
     
     /*
@@ -74,17 +99,16 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     
         // Configure the cell
         if let imageCell = cell as? ImageCollectionViewCell {
-            imageCell.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
             imageCell.imageURL = imageURLs[indexPath.item]
         }
 
         return cell
     }
     
-    // MARK: Private Implementations
+    // MARK: - Private Implementations
     
 
-    // MARK: UICollectionViewDelegate
+    // MARK: - UICollectionViewDelegate
 
     /*
     // Uncomment this method to specify if the specified item should be highlighted during tracking

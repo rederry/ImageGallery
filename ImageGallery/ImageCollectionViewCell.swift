@@ -11,6 +11,7 @@ import UIKit
 class ImageCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     var imageURL: URL? {
         didSet {
@@ -25,11 +26,13 @@ class ImageCollectionViewCell: UICollectionViewCell {
         }
         set {
             imageView.image = newValue
+            spinner.stopAnimating()
         }
     }
     
     private func fetchImage() {
         if let url = imageURL {
+            spinner.startAnimating()
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 let data = try? Data(contentsOf: url)
                 DispatchQueue.main.async {
