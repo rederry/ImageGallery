@@ -39,6 +39,7 @@
                                         </activityIndicatorView>
                                     </subviews>
                                 </view>
+                                <color key="backgroundColor" name="selectedControlColor" catalog="System" colorSpace="catalog"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="9S1-FV-pnO" secondAttribute="bottom" id="88h-yz-LYf"/>
                                     <constraint firstAttribute="trailing" secondItem="9S1-FV-pnO" secondAttribute="trailing" id="A9E-03-Pvj"/>
@@ -64,6 +65,7 @@
                                         </activityIndicatorView>
                                     </subviews>
                                 </view>
+                                <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="PFY-m1-zFF" firstAttribute="centerY" secondItem="Xck-JC-PkX" secondAttribute="centerY" id="J3Z-Ro-10A"/>
                                     <constraint firstItem="PFY-m1-zFF" firstAttribute="centerX" secondItem="Xck-JC-PkX" secondAttribute="centerX" id="lJJ-6n-3Sd"/>
@@ -78,7 +80,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BZh-tB-L3U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-72.65625" y="421.875"/>
+            <point key="canvasLocation" x="-101" y="391"/>
         </scene>
     </scenes>
 </document>
