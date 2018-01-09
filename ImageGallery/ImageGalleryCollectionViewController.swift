@@ -28,6 +28,8 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
 
         collectionView?.dragDelegate = self
         collectionView?.dropDelegate = self
+        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(adjustCellWidth))
+        collectionView?.addGestureRecognizer(pinch)
     }
     
     // MARK: - UICollectionViewDragDelegate
@@ -181,6 +183,21 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
             return [item]
         } else {
             return []
+        }
+    }
+    
+    private var flowLayout: UICollectionViewFlowLayout? {
+        return collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
+    }
+    
+    @objc private func adjustCellWidth(byHandlingGestureRecognizedBy recognizer: UIPinchGestureRecognizer) {
+        switch recognizer.state {
+        case .changed, .ended:
+            flowLayout?.invalidateLayout()
+            cellWidth *= recognizer.scale
+            recognizer.scale = 1.0
+        default:
+            break
         }
     }
 }
