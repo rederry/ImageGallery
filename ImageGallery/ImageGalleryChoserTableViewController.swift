@@ -44,7 +44,14 @@ class ImageGalleryChoserTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
-        cell.textLabel?.text = galleryName(at: indexPath)
+        if let galleryCell = cell as? ImageGalleryNameTableViewCell {
+            galleryCell.titleTextField.text = galleryName(at: indexPath)
+            galleryCell.resignationHandler = { (cell) in
+                if let newIndexPath = tableView.indexPath(for: cell) {
+                    self.imageGalleries.all[newIndexPath.section][newIndexPath.row].name = galleryCell.titleTextField.text!
+                }
+            }
+        }
         return cell
     }
     
@@ -92,6 +99,10 @@ class ImageGalleryChoserTableViewController: UITableViewController {
         } else {
             return nil
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 40
     }
     
     // MARK: - Navigation
