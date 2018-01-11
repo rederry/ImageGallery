@@ -9,6 +9,7 @@
 import UIKit
 
 private let reuseIdentifier = "GalleryImageCell"
+private let showDetailSegue = "Show Image Detail"
 
 class ImageGalleryCollectionViewController: UICollectionViewController, UICollectionViewDropDelegate, UICollectionViewDragDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -104,16 +105,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
             }
         }
     }
-    
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     // MARK: UICollectionViewDataSource
 
@@ -135,14 +127,30 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
 
         return cell
     }
+
+    // MARK: - UICollectionViewDelegate
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        performSegue(withIdentifier: showDetailSegue, sender: indexPath)
+    }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let identifier = segue.identifier {
+            switch identifier {
+            case showDetailSegue:
+                if let indexPath = sender as? IndexPath,
+                   let imgvc = segue.destination as? ImageDetailViewController {
+                    imgvc.imageURL = imageGallery.images[indexPath.item].url
+                }
+            default: break
+            }
+        }
+    }
     
     // MARK: - UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: cellWidth, height: cellWidth * CGFloat(imageGallery.images[indexPath.item].aspectRatio))
     }
-
-    // MARK: - UICollectionViewDelegate
-
     
     // MARK: - Private Implementations
     private var cellWidth: CGFloat = 130

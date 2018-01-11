@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -78,10 +79,48 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="1R9-Va-W9M"/>
+                    <connections>
+                        <segue destination="LQz-86-pcM" kind="show" identifier="Show Image Detail" id="IWz-0f-0k7"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BZh-tB-L3U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="383" y="848"/>
+        </scene>
+        <!--Image Detail View Controller-->
+        <scene sceneID="9C7-cv-P73">
+            <objects>
+                <viewController id="LQz-86-pcM" customClass="ImageDetailViewController" customModule="ImageGallery" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qI1-Cr-Jtj">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K1z-1A-Kx7">
+                                <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="K1z-1A-Kx7" firstAttribute="top" secondItem="8CI-ta-3bM" secondAttribute="top" id="78I-6F-fvb"/>
+                            <constraint firstItem="K1z-1A-Kx7" firstAttribute="leading" secondItem="8CI-ta-3bM" secondAttribute="leading" id="8iN-4A-Q8D"/>
+                            <constraint firstItem="K1z-1A-Kx7" firstAttribute="top" secondItem="8CI-ta-3bM" secondAttribute="top" id="Il9-zU-TlC"/>
+                            <constraint firstItem="8CI-ta-3bM" firstAttribute="bottom" secondItem="K1z-1A-Kx7" secondAttribute="bottom" id="Kqx-ct-SUg"/>
+                            <constraint firstItem="K1z-1A-Kx7" firstAttribute="top" secondItem="8CI-ta-3bM" secondAttribute="top" id="SUz-bP-Xoc"/>
+                            <constraint firstItem="K1z-1A-Kx7" firstAttribute="leading" secondItem="8CI-ta-3bM" secondAttribute="leading" id="TF9-OR-m2h"/>
+                            <constraint firstItem="8CI-ta-3bM" firstAttribute="trailing" secondItem="K1z-1A-Kx7" secondAttribute="trailing" id="X8o-Aa-VgI"/>
+                            <constraint firstItem="K1z-1A-Kx7" firstAttribute="leading" secondItem="8CI-ta-3bM" secondAttribute="leading" id="bh4-tU-gU6"/>
+                            <constraint firstItem="8CI-ta-3bM" firstAttribute="trailing" secondItem="K1z-1A-Kx7" secondAttribute="trailing" id="c3h-Dc-nCV"/>
+                            <constraint firstItem="8CI-ta-3bM" firstAttribute="trailing" secondItem="K1z-1A-Kx7" secondAttribute="trailing" id="te9-AK-LmK"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="8CI-ta-3bM"/>
+                    </view>
+                    <connections>
+                        <outlet property="scrollView" destination="K1z-1A-Kx7" id="NcH-IX-4Gz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5RG-N3-HXq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1095.3125" y="847.8515625"/>
         </scene>
         <!--ImageGalleryChoser-->
         <scene sceneID="C68-Wu-nUB">

@@ -46,6 +46,7 @@ class ImageGalleryChoserTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         if let galleryCell = cell as? ImageGalleryNameTableViewCell {
             galleryCell.titleTextField.text = galleryName(at: indexPath)
+            // MARK: - Need weak
             galleryCell.resignationHandler = { (cell) in
                 if let newIndexPath = tableView.indexPath(for: cell) {
                     self.imageGalleries.all[newIndexPath.section][newIndexPath.row].name = galleryCell.titleTextField.text!
