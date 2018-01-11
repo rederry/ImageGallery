@@ -12,19 +12,15 @@ private let reuseIdentifier = "GalleryImageCell"
 
 class ImageGalleryCollectionViewController: UICollectionViewController, UICollectionViewDropDelegate, UICollectionViewDragDelegate, UICollectionViewDelegateFlowLayout {
     
-    // Temporary model
-    var imageURLs = [(URL, CGFloat)]()
-    
-    func setupImageURLs() {
-        if let u1 = URL(string: "https://i.imgur.com/Wm1xcNZ.jpg"), let u2 = URL(string: "https://i.imgur.com/pDygWBH.jpg") {
-            imageURLs += [(u1, 1.1), (u2, 1.7)]
+    var imageGallery = ImageGallery(name: "test") {
+        didSet {
+            print("reload")
+            collectionView?.reloadData()
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupImageURLs()
 
         collectionView?.dragDelegate = self
         collectionView?.dropDelegate = self
@@ -73,16 +69,16 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
                 if  let url = item.dragItem.localObject as? NSURL {
                     print("Drag locally with \(url)")
                     collectionView.performBatchUpdates({
-                        imageURLs.remove(at: sourceIndexPath.item)
-                        imageURLs.insert((url as URL, 1), at: indexPath.item)
+                        imageGallery.images.remove(at: sourceIndexPath.item)
+                        imageGallery.images.insert(ImageModel(url: url as URL, aspectRatio: 1), at: indexPath.item)
                         collectionView.deleteItems(at: [sourceIndexPath])
                         collectionView.insertItems(at: [destinationIndexPath])
                     })
-//                    coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+                    coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
                 }
             } else {
                 let placeHolderContext = coordinator.drop(item.dragItem, to: UICollectionViewDropPlaceholder(insertionIndexPath: indexPath, reuseIdentifier: "DropPlaceholderCell"))
-                var localAspectRatio: CGFloat?
+                var localAspectRatio = CGFloat()
                 // Load UIImage
                 item.dragItem.itemProvider.loadObject(ofClass: UIImage.self, completionHandler: { (provider, error) in
                     if let image = provider as? UIImage {
@@ -95,7 +91,8 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
                         if let url = provider as? NSURL{
                             placeHolderContext.commitInsertion(dataSourceUpdates: { (insertionIndexPath) in
                                 // MARK: Warning
-                                self.imageURLs.insert(((url as URL).imageURL, localAspectRatio!), at: insertionIndexPath.item)
+                                let imageModel = ImageModel(url: (url as URL).imageURL, aspectRatio: Double(localAspectRatio))
+                                self.imageGallery.images.insert(imageModel, at: insertionIndexPath.item)
                             })
                         } else {
                             placeHolderContext.deletePlaceholder()
@@ -123,7 +120,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageURLs.count
+        return imageGallery.images.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -131,7 +128,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     
         // Configure the cell
         if let imageCell = cell as? ImageCollectionViewCell {
-            imageCell.imageURL = imageURLs[indexPath.item].0
+            imageCell.imageURL = imageGallery.images[indexPath.item].url
         }
 
         return cell
@@ -139,38 +136,11 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     
     // MARK: - UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: cellWidth, height: cellWidth * imageURLs[indexPath.item].1)
+        return CGSize(width: cellWidth, height: cellWidth * CGFloat(imageGallery.images[indexPath.item].aspectRatio))
     }
 
     // MARK: - UICollectionViewDelegate
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
 
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
     
     // MARK: - Private Implementations
     private var cellWidth: CGFloat = 130

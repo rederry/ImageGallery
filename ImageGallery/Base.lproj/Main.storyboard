@@ -116,6 +116,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="ImageGalleryChoser" id="WaF-wh-aKJ"/>
+                    <connections>
+                        <segue destination="5Bx-FY-87a" kind="showDetail" identifier="Chose Gallery" id="xc6-zf-1n9"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aj7-cp-tE6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -169,4 +172,7 @@
             <point key="canvasLocation" x="-355" y="848"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="xc6-zf-1n9"/>
+    </inferredMetricsTieBreakers>
 </document>

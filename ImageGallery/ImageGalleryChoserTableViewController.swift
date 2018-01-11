@@ -9,6 +9,7 @@
 import UIKit
 
 private let reuseIdentifier = "Gallery Cell"
+private let choseGallerySegueId = "Chose Gallery"
 
 class ImageGalleryChoserTableViewController: UITableViewController {
     
@@ -56,18 +57,34 @@ class ImageGalleryChoserTableViewController: UITableViewController {
         }
     }
     
+    // MARK: - Table view delegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: choseGallerySegueId, sender: indexPath)
+    }
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let identifier = segue.identifier {
+            switch identifier {
+            case choseGallerySegueId:
+                if let indexPath = sender as? IndexPath {
+                    if let ivc = (segue.destination as? UINavigationController)?.visibleViewController as? ImageGalleryCollectionViewController {
+                        ivc.imageGallery = imageGalleries.all[indexPath.section][indexPath.row]
+                    }
+                }
+            default:
+                break
+            }
+        }
+    }
+    
+    // MARK: - Private Implementations
+    
     private func galleryName(at indexPath: IndexPath) -> String {
         return imageGalleries.all[indexPath.section][indexPath.row].name
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
