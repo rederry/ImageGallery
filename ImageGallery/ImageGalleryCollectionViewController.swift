@@ -12,10 +12,12 @@ private let reuseIdentifier = "GalleryImageCell"
 
 class ImageGalleryCollectionViewController: UICollectionViewController, UICollectionViewDropDelegate, UICollectionViewDragDelegate, UICollectionViewDelegateFlowLayout {
     
-    var imageGallery = ImageGallery(name: "test") {
+    var imageGallery = ImageGallery(name: "tt") {
         didSet {
-            print("reload")
-            collectionView?.reloadData()
+            if !(imageGallery === oldValue) {
+                print("reload")
+                collectionView?.reloadData()
+            }
         }
     }
 

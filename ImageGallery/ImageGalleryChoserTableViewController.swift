@@ -57,10 +57,41 @@ class ImageGalleryChoserTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Delete the row from the data source
+            // The Model MUST be in sync with the new state of affairs before you change tableview rows!
+            if indexPath.section == 0 {
+                imageGalleries.recentlyDeleted.insert(imageGalleries.galleries.remove(at: indexPath.row), at: 0)
+                tableView.moveRow(at: indexPath, to: IndexPath(row: 0, section: 1))
+            } else {
+                imageGalleries.recentlyDeleted.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        }
+    }
+    
+    private var lastSelectIndexPath: IndexPath?
     // MARK: - Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: choseGallerySegueId, sender: indexPath)
+        if indexPath.section != 1, indexPath != lastSelectIndexPath {
+            lastSelectIndexPath = indexPath
+            performSegue(withIdentifier: choseGallerySegueId, sender: indexPath)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if indexPath.section == 1 {
+            let undelete = UIContextualAction(style: .normal, title: "undelete", handler: { (contextAction, sourceView, completionHandler) in
+                self.imageGalleries.galleries.insert(self.imageGalleries.recentlyDeleted.remove(at: indexPath.row), at: 0)
+                tableView.moveRow(at: indexPath, to: IndexPath(row: 0, section: 0))
+                completionHandler(true)
+            })
+            return UISwipeActionsConfiguration(actions: [undelete])
+        } else {
+            return nil
+        }
     }
     
     // MARK: - Navigation
@@ -73,6 +104,7 @@ class ImageGalleryChoserTableViewController: UITableViewController {
                 if let indexPath = sender as? IndexPath {
                     if let ivc = (segue.destination as? UINavigationController)?.visibleViewController as? ImageGalleryCollectionViewController {
                         ivc.imageGallery = imageGalleries.all[indexPath.section][indexPath.row]
+                        ivc.navigationItem.title = imageGalleries.all[indexPath.section][indexPath.row].name
                     }
                 }
             default:
