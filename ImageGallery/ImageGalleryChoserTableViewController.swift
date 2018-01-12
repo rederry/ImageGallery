@@ -14,22 +14,11 @@ private let choseGallerySegueId = "Chose Gallery"
 class ImageGalleryChoserTableViewController: UITableViewController {
     
     var imageGalleries = ImageGalleries()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Update model
-        let im1 = ImageModel(url: URL(string: "https://i.imgur.com/Wm1xcNZ.jpg")!, aspectRatio: 1.1)
-        let im2 = ImageModel(url: URL(string: "https://i.imgur.com/pDygWBH.jpg")!, aspectRatio: 1.7)
-        let im3 = ImageModel(url: URL(string: "https://i.imgur.com/a8uy2uy.png")!, aspectRatio: 0.8)
-        let ig1 = ImageGallery(name: "image gallery 1")
-        let ig2 = ImageGallery(name: "image gallery deleted 1")
-        ig1.addImage(image: im1)
-        ig1.addImage(image: im2)
-        ig2.addImage(image: im3)
-        imageGalleries.galleries.append(ig1)
-        imageGalleries.recentlyDeleted.append(ig2)
-
+        setupModel()
+        tableView(tableView, didSelectRowAt: IndexPath(row: 0, section: 0))
     }
 
     // MARK: - Table view data source
@@ -46,7 +35,7 @@ class ImageGalleryChoserTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         if let galleryCell = cell as? ImageGalleryNameTableViewCell {
             galleryCell.titleTextField.text = galleryName(at: indexPath)
-            // MARK: - Need weak
+            // TODO: - Need weak
             galleryCell.resignationHandler = { (cell) in
                 if let newIndexPath = tableView.indexPath(for: cell) {
                     self.imageGalleries.all[newIndexPath.section][newIndexPath.row].name = galleryCell.titleTextField.text!
@@ -79,7 +68,6 @@ class ImageGalleryChoserTableViewController: UITableViewController {
         }
     }
     
-    private var lastSelectIndexPath: IndexPath?
     // MARK: - Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -135,8 +123,24 @@ class ImageGalleryChoserTableViewController: UITableViewController {
     
     // MARK: - Private Implementations
     
+    private var lastSelectIndexPath: IndexPath?
+    
     private func galleryName(at indexPath: IndexPath) -> String {
         return imageGalleries.all[indexPath.section][indexPath.row].name
+    }
+    
+    private func setupModel() {
+        // Update model
+        let im1 = ImageModel(url: URL(string: "https://i.imgur.com/Wm1xcNZ.jpg")!, aspectRatio: 1.1)
+        let im2 = ImageModel(url: URL(string: "https://i.imgur.com/pDygWBH.jpg")!, aspectRatio: 1.7)
+        let im3 = ImageModel(url: URL(string: "https://i.imgur.com/a8uy2uy.png")!, aspectRatio: 0.8)
+        let ig1 = ImageGallery(name: "New Gallery")
+        let ig2 = ImageGallery(name: "Deleted Gallery")
+        ig2.addImage(image: im1)
+        ig2.addImage(image: im2)
+        ig2.addImage(image: im3)
+        imageGalleries.galleries.append(ig1)
+        imageGalleries.recentlyDeleted.append(ig2)
     }
 
 }
