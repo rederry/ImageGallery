@@ -37,14 +37,13 @@ class ImageDetailViewController: UIViewController, UIScrollViewDelegate {
     
     private func fetchImage() {
         if let url = imageURL {
-            DispatchQueue.global().async {
+            DispatchQueue.global().async { [weak self] in
                 if let data = try? Data(contentsOf: url) {
-                    if let image = UIImage(data: data), url == self.imageURL {
+                    if let image = UIImage(data: data), url == self?.imageURL {
                         DispatchQueue.main.async {
-                            print("set image")
-                            self.imageView.image = image
-                            self.imageView.sizeToFit()
-                            self.scrollView.contentSize = self.imageView.frame.size
+                            self?.imageView.image = image
+                            self?.imageView.sizeToFit()
+                            self?.scrollView.contentSize = (self?.imageView.frame.size)!
                         }
                     }
                 }

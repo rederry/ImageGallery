@@ -125,6 +125,14 @@ class ImageGalleryChoserTableViewController: UITableViewController {
         }
     }
     
+    // MARK: - View Controller Lifecycle
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if splitViewController?.preferredDisplayMode != .primaryOverlay {
+            splitViewController?.preferredDisplayMode = .primaryOverlay
+        }
+    }
+    
     // MARK: - Private Implementations
     
     private func galleryName(at indexPath: IndexPath) -> String {

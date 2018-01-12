@@ -29,6 +29,8 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         collectionView?.dropDelegate = self
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(adjustCellWidth))
         collectionView?.addGestureRecognizer(pinch)
+        
+//        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
     }
     
     // MARK: - UICollectionViewDragDelegate
