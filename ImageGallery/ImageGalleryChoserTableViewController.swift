@@ -129,6 +129,12 @@ class ImageGalleryChoserTableViewController: UITableViewController {
         return imageGalleries.all[indexPath.section][indexPath.row].name
     }
     
+    @IBAction func newGallery(_ sender: UIBarButtonItem) {
+        let gallery = ImageGallery(name: "New Gallery")
+        imageGalleries.galleries.append(gallery)
+        tableView.reloadData()
+    }
+    
     private func setupModel() {
         // Update model
         let im1 = ImageGallery.ImageModel(url: URL(string: "https://i.imgur.com/Wm1xcNZ.jpg")!, aspectRatio: 1.1)

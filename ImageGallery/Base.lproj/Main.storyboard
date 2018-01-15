@@ -188,7 +188,13 @@
                             <outlet property="delegate" destination="Zdn-TC-VSS" id="UUE-5c-qDg"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="ImageGalleryChoser" id="WaF-wh-aKJ"/>
+                    <navigationItem key="navigationItem" title="ImageGalleryChoser" id="WaF-wh-aKJ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="dWJ-NO-9i5">
+                            <connections>
+                                <action selector="newGallery:" destination="Zdn-TC-VSS" id="8Ya-ne-znU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="5Bx-FY-87a" kind="showDetail" identifier="Chose Gallery" id="xc6-zf-1n9"/>
                     </connections>
@@ -246,6 +252,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="TeE-yQ-Vh8"/>
+        <segue reference="xc6-zf-1n9"/>
     </inferredMetricsTieBreakers>
 </document>
