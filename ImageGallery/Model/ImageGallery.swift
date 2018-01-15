@@ -12,6 +12,11 @@ class ImageGallery {
     var name: String
     var images = [ImageModel]()
     
+    struct ImageModel {
+        let url: URL
+        let aspectRatio: Double
+    }
+    
     init(name: String) {
         self.name = name
     }

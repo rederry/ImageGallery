@@ -15,7 +15,9 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     var imageURL: URL? {
         didSet {
-            fetchImage()
+            if oldValue != imageURL {
+                fetchImage()
+            }
         }
     }
     

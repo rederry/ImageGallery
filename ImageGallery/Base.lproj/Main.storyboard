@@ -78,8 +78,11 @@
                             <outlet property="delegate" destination="qJM-OQ-Gwa" id="D5F-LW-8IQ"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="1R9-Va-W9M"/>
+                    <navigationItem key="navigationItem" id="1R9-Va-W9M">
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="3cV-gO-Iqq"/>
+                    </navigationItem>
                     <connections>
+                        <outlet property="trashBarButtonItem" destination="3cV-gO-Iqq" id="ZPf-0s-zrv"/>
                         <segue destination="LQz-86-pcM" kind="show" identifier="Show Image Detail" id="IWz-0f-0k7"/>
                     </connections>
                 </collectionViewController>

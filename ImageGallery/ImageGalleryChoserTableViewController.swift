@@ -35,10 +35,9 @@ class ImageGalleryChoserTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         if let galleryCell = cell as? ImageGalleryNameTableViewCell {
             galleryCell.titleTextField.text = galleryName(at: indexPath)
-            // TODO: - Need weak
-            galleryCell.resignationHandler = { (cell) in
-                if let newIndexPath = tableView.indexPath(for: cell) {
-                    self.imageGalleries.all[newIndexPath.section][newIndexPath.row].name = galleryCell.titleTextField.text!
+            galleryCell.resignationHandler = { [weak self] (currentCell) in
+                if let newIndexPath = tableView.indexPath(for: currentCell) {
+                    self?.imageGalleries.all[newIndexPath.section][newIndexPath.row].name = galleryCell.titleTextField.text!
                 }
             }
         }
@@ -80,8 +79,9 @@ class ImageGalleryChoserTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if indexPath.section == 1 {
             let undelete = UIContextualAction(style: .normal, title: "undelete", handler: { (contextAction, sourceView, completionHandler) in
-                self.imageGalleries.galleries.insert(self.imageGalleries.recentlyDeleted.remove(at: indexPath.row), at: 0)
-                tableView.moveRow(at: indexPath, to: IndexPath(row: 0, section: 0))
+                let lastIndex = self.imageGalleries.galleries.count
+                self.imageGalleries.galleries.insert(self.imageGalleries.recentlyDeleted.remove(at: indexPath.row), at: lastIndex)
+                tableView.moveRow(at: indexPath, to: IndexPath(row: lastIndex, section: 0))
                 completionHandler(true)
             })
             return UISwipeActionsConfiguration(actions: [undelete])
@@ -131,9 +131,9 @@ class ImageGalleryChoserTableViewController: UITableViewController {
     
     private func setupModel() {
         // Update model
-        let im1 = ImageModel(url: URL(string: "https://i.imgur.com/Wm1xcNZ.jpg")!, aspectRatio: 1.1)
-        let im2 = ImageModel(url: URL(string: "https://i.imgur.com/pDygWBH.jpg")!, aspectRatio: 1.7)
-        let im3 = ImageModel(url: URL(string: "https://i.imgur.com/a8uy2uy.png")!, aspectRatio: 0.8)
+        let im1 = ImageGallery.ImageModel(url: URL(string: "https://i.imgur.com/Wm1xcNZ.jpg")!, aspectRatio: 1.1)
+        let im2 = ImageGallery.ImageModel(url: URL(string: "https://i.imgur.com/pDygWBH.jpg")!, aspectRatio: 1.7)
+        let im3 = ImageGallery.ImageModel(url: URL(string: "https://i.imgur.com/a8uy2uy.png")!, aspectRatio: 0.8)
         let ig1 = ImageGallery(name: "New Gallery")
         let ig2 = ImageGallery(name: "Deleted Gallery")
         ig2.addImage(image: im1)
