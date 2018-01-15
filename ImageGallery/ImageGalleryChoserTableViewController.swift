@@ -78,7 +78,7 @@ class ImageGalleryChoserTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if indexPath.section == 1 {
-            let undelete = UIContextualAction(style: .normal, title: "undelete", handler: { (contextAction, sourceView, completionHandler) in
+            let undelete = UIContextualAction(style: .normal, title: "Undelete", handler: { (contextAction, sourceView, completionHandler) in
                 let lastIndex = self.imageGalleries.galleries.count
                 self.imageGalleries.galleries.insert(self.imageGalleries.recentlyDeleted.remove(at: indexPath.row), at: lastIndex)
                 tableView.moveRow(at: indexPath, to: IndexPath(row: lastIndex, section: 0))

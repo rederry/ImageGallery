@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE82E14B200C3F5F003CC498 /* TrashBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE82E14A200C3F5F003CC498 /* TrashBarButtonItem.swift */; };
 		EEA7A05E2004A9A50003062E /* ImageGalleryChoserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA7A05D2004A9A50003062E /* ImageGalleryChoserTableViewController.swift */; };
 		EEA7A06220059BAA0003062E /* ImageGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA7A06120059BAA0003062E /* ImageGallery.swift */; };
 		EEA7A06420059CF40003062E /* ImageGalleries.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA7A06320059CF40003062E /* ImageGalleries.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EE82E14A200C3F5F003CC498 /* TrashBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashBarButtonItem.swift; sourceTree = "<group>"; };
 		EEA7A05D2004A9A50003062E /* ImageGalleryChoserTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryChoserTableViewController.swift; sourceTree = "<group>"; };
 		EEA7A06120059BAA0003062E /* ImageGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGallery.swift; sourceTree = "<group>"; };
 		EEA7A06320059CF40003062E /* ImageGalleries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleries.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				EEB43BD71FFFA2DC005125F5 /* ImageGalleryCollectionViewController.swift */,
+				EE82E14A200C3F5F003CC498 /* TrashBarButtonItem.swift */,
 				EEA7A05D2004A9A50003062E /* ImageGalleryChoserTableViewController.swift */,
 				EEB43BC81FFF9AC9005125F5 /* Main.storyboard */,
 				EEA7A06B200793D00003062E /* ImageDetailViewController.swift */,
@@ -182,6 +185,7 @@
 				EEA7A06A200740010003062E /* ImageGalleryNameTableViewCell.swift in Sources */,
 				EEB43BD81FFFA2DC005125F5 /* ImageGalleryCollectionViewController.swift in Sources */,
 				EEA7A06C200793D00003062E /* ImageDetailViewController.swift in Sources */,
+				EE82E14B200C3F5F003CC498 /* TrashBarButtonItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

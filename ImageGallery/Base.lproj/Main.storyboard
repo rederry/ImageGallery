@@ -79,10 +79,14 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="1R9-Va-W9M">
-                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="3cV-gO-Iqq"/>
+                        <barButtonItem key="rightBarButtonItem" springLoaded="YES" systemItem="trash" id="RmG-ey-bF2">
+                            <connections>
+                                <action selector="deleteCell:" destination="qJM-OQ-Gwa" id="vuv-bc-dH2"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="trashBarButtonItem" destination="3cV-gO-Iqq" id="ZPf-0s-zrv"/>
+                        <outlet property="trashBarButtonItem" destination="RmG-ey-bF2" id="B54-6A-5eX"/>
                         <segue destination="LQz-86-pcM" kind="show" identifier="Show Image Detail" id="IWz-0f-0k7"/>
                     </connections>
                 </collectionViewController>

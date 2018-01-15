@@ -30,17 +30,18 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(adjustCellWidth))
         collectionView?.addGestureRecognizer(pinch)
         
-//        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
     }
     
     // MARK: - UICollectionViewDragDelegate
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         session.localContext = collectionView
-        print("Dragging")
+        currentDragIndexPaths.append(indexPath)
         return dragItems(at: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
+        currentDragIndexPaths.append(indexPath)
         return dragItems(at: indexPath)
     }
     
@@ -116,12 +117,10 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
         // Configure the cell
         if let imageCell = cell as? ImageCollectionViewCell {
             imageCell.imageURL = imageGallery.images[indexPath.item].url
         }
-
         return cell
     }
 
@@ -153,16 +152,23 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
 
     private var cellWidth: CGFloat = 130
     
-    @IBOutlet private weak var trashBarButtonItem: UIBarButtonItem! {
-        didSet {
-
+    @IBOutlet private weak var trashBarButtonItem: UIBarButtonItem!
+    
+    @IBAction private func deleteCell(_ sender: TrashBarButtonItem) {
+        if !currentDragIndexPaths.isEmpty {
+            if let indexToRemove = currentDragIndexPaths.first?.item {
+                imageGallery.images.remove(at: indexToRemove)
+                collectionView?.reloadData()
+            }
         }
     }
+    
+    private var currentDragIndexPaths = [IndexPath]()
     
     /// Drag a list of item at the indexPath
     private func dragItems(at indexPath: IndexPath) -> [UIDragItem] {
         if let itemCell = collectionView?.cellForItem(at: indexPath) as? ImageCollectionViewCell,
-          let image = itemCell.imageView.image {
+           let image = itemCell.imageView.image {
             let item = UIDragItem(itemProvider: NSItemProvider(object: image))
             item.localObject = image
             return [item]
