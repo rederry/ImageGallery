@@ -15,10 +15,18 @@ class ImageGalleryChoserTableViewController: UITableViewController {
     
     var imageGalleries = ImageGalleries()
     
+    // MARK: - View Controller Lifecycle
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if splitViewController?.preferredDisplayMode != .primaryOverlay {
+            splitViewController?.preferredDisplayMode = .primaryOverlay
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupModel()
-        tableView(tableView, didSelectRowAt: IndexPath(row: 0, section: 0))
+        tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .none)
     }
 
     // MARK: - Table view data source
@@ -46,10 +54,19 @@ class ImageGalleryChoserTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0:
-            return nil
-        default:
+        case 1:
             return "Recently Deleted"
+        default:
+            return nil
+        }
+    }
+    
+    private func selectFirstRow() {
+        if tableView(self.tableView, numberOfRowsInSection: 0) > 0 {
+            self.tableView(self.tableView, didSelectRowAt: IndexPath(row: 0, section: 0))
+            Timer.scheduledTimer(withTimeInterval: 1.1, repeats: false, block: { (timer) in
+                self.tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .none)
+            })
         }
     }
     
@@ -58,11 +75,17 @@ class ImageGalleryChoserTableViewController: UITableViewController {
             // Delete the row from the data source
             // The Model MUST be in sync with the new state of affairs before you change tableview rows!
             if indexPath.section == 0 {
-                imageGalleries.recentlyDeleted.insert(imageGalleries.galleries.remove(at: indexPath.row), at: 0)
-                tableView.moveRow(at: indexPath, to: IndexPath(row: 0, section: 1))
+                tableView.performBatchUpdates({
+                    imageGalleries.recentlyDeleted.insert(imageGalleries.galleries.remove(at: indexPath.row), at: 0)
+                    tableView.moveRow(at: indexPath, to: IndexPath(row: 0, section: 1))
+                })
+                selectFirstRow()
             } else {
-                imageGalleries.recentlyDeleted.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
+                tableView.performBatchUpdates({
+                    imageGalleries.recentlyDeleted.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                })
+                selectFirstRow()
             }
         }
     }
@@ -70,8 +93,8 @@ class ImageGalleryChoserTableViewController: UITableViewController {
     // MARK: - Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section != 1, indexPath != lastSelectIndexPath {
-            lastSelectIndexPath = indexPath
+        if indexPath.section != 1 {  //, indexPath != lastSelectIndexPath {
+//            lastSelectIndexPath = indexPath
             performSegue(withIdentifier: choseGallerySegueId, sender: indexPath)
         }
     }
@@ -82,6 +105,7 @@ class ImageGalleryChoserTableViewController: UITableViewController {
                 let lastIndex = self.imageGalleries.galleries.count
                 self.imageGalleries.galleries.insert(self.imageGalleries.recentlyDeleted.remove(at: indexPath.row), at: lastIndex)
                 tableView.moveRow(at: indexPath, to: IndexPath(row: lastIndex, section: 0))
+                self.selectFirstRow()
                 completionHandler(true)
             })
             return UISwipeActionsConfiguration(actions: [undelete])
@@ -113,17 +137,9 @@ class ImageGalleryChoserTableViewController: UITableViewController {
         }
     }
     
-    // MARK: - View Controller Lifecycle
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        if splitViewController?.preferredDisplayMode != .primaryOverlay {
-            splitViewController?.preferredDisplayMode = .primaryOverlay
-        }
-    }
+    // MARK: - Private Implementation
     
-    // MARK: - Private Implementations
-    
-    private var lastSelectIndexPath: IndexPath?
+//    private var lastSelectIndexPath: IndexPath?
     
     private func galleryName(at indexPath: IndexPath) -> String {
         return imageGalleries.all[indexPath.section][indexPath.row].name
@@ -133,6 +149,7 @@ class ImageGalleryChoserTableViewController: UITableViewController {
         let gallery = ImageGallery(name: "New Gallery")
         imageGalleries.galleries.append(gallery)
         tableView.reloadData()
+        selectFirstRow()
     }
     
     private func setupModel() {
